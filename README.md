@@ -35,3 +35,8 @@ El servidor usa el puerto que Heroku asigna en `PORT`.
 
 - [WebSockets: qué son](https://www.youtube.com/watch?v=vQjiN8Qgs3c)
 - [WebSockets con Socket.IO](https://www.youtube.com/watch?v=UwS3wJoi7fY)
+
+## Enlaces de entrega
+
+- Código en GitHub: pendiente.
+- Aplicación en Heroku: pendiente.
