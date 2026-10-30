@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat en tiempo real</title>
+    <style>
+      body {
+        max-width: 700px;
+        margin: 32px auto;
+        padding: 0 16px;
+        font-family: Arial, sans-serif;
+      }
+
+      #messages {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 12px;
+      }
+
+      form { display: flex; gap: 8px; margin-top: 12px; }
+      input { min-width: 0; padding: 8px; }
+      #name { width: 130px; }
+      #text { flex: 1; }
+
+      @media (max-width: 520px) {
+        form { flex-wrap: wrap; }
+        #name { width: 100%; }
+        #text { flex: 1 1 70%; }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Chat en tiempo real</h1>
+    <p>Abre esta página en otra pestaña para probar el chat.</p>
+
+    <div id="messages" aria-live="polite"></div>
+
+    <form id="chat-form">
+      <input id="name" type="text" maxlength="20" placeholder="Tu nombre" aria-label="Tu nombre" />
+      <input id="text" type="text" maxlength="300" placeholder="Escribe un mensaje" aria-label="Escribe un mensaje" required />
+      <button type="submit">Enviar</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io()
+      const form = document.querySelector('#chat-form')
+      const nameInput = document.querySelector('#name')
+      const textInput = document.querySelector('#text')
+      const messages = document.querySelector('#messages')
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault()
+        const text = textInput.value.trim()
+        if (!text) return
+
+        socket.emit('chat message', {
+          name: nameInput.value.trim() || 'Anónimo',
+          text,
+        })
+        textInput.value = ''
+        textInput.focus()
+      })
+
+      socket.on('chat message', ({ name, text }) => {
+        const message = document.createElement('p')
+        message.textContent = `${name}: ${text}`
+        messages.appendChild(message)
+        messages.scrollTop = messages.scrollHeight
+      })
+    </script>
+  </body>
+</html>

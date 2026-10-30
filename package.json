@@ -1,0 +1,17 @@
+{
+  "name": "chat-nodejs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chat sencillo en tiempo real con Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  }
+}
